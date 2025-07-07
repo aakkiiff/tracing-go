@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: devopsaes/akif:tracer-6
+          ports:
+            - containerPort: 9090
+          env:
+            - name: OTLP_ENDPOINT
+              value: tempo.monitoring:4318
